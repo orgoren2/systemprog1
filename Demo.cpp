@@ -1,3 +1,5 @@
+//Id-9115
+//Email address- orgoren3146@gmail.com
 
 #include "Graph.hpp"
 #include "Algorithms.hpp"
@@ -24,6 +26,7 @@ ariel::Graph weightedGraph;
         {0, 0, 2, 0, 0, 0, 6, 7, 0}
     };
     weightedGraph.loadGraph(graph);
+    cout<<weightedGraph.getIsDirected()<<endl;
 
     // Test shortest path from vertex 0 to vertex 4
     cout<<Algorithms::shortestPath(weightedGraph, 0, 4)<<endl;

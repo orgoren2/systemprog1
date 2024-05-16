@@ -1,4 +1,4 @@
-//Id- 314619115
+//Id-9115
 //Email address- orgoren3146@gmail.com
 
 #include "Algorithms.hpp"
@@ -214,9 +214,7 @@ string Algorithms::shortestPathUnweighed(Graph gr, size_t start, size_t end)
 
     string Algorithms::isContainsCycle(Graph gr)
     {
-        if(!gr.getIsDirected()){
-            return "0";
-        }
+       
         vector<vector<int>> graph = gr.getGraph();
         size_t numOfVertices = (size_t)gr.getNumOfVertices();
 
@@ -305,13 +303,16 @@ string Algorithms::shortestPathUnweighed(Graph gr, size_t start, size_t end)
 
     string Algorithms::negativeCycle(Graph gr)
     {
+        if( !gr.getIsWeighed()){
+            return "Graph doesn't contains negative weight cycle"; 
+        }
         vector<vector<int>> graph = gr.getGraph();
         size_t numOfVertices = (size_t)gr.getNumOfVertices();
         vector<int> distance(numOfVertices, INFINITE);
         vector<int> parent(numOfVertices, -1);
         distance[0] = 0;
 
-        // relax all edges numOfVertices - 1 times
+
         for (size_t i = 0; i < numOfVertices - 1; i++)
         {
             for (size_t u = 0; u < numOfVertices; u++)
@@ -340,3 +341,4 @@ string Algorithms::shortestPathUnweighed(Graph gr, size_t start, size_t end)
         }
         return "Graph doesn't contains negative weight cycle";
     }
+
