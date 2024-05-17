@@ -30,13 +30,13 @@ ariel::Graph weightedGraph;
 
     // Test shortest path from vertex 0 to vertex 4
     cout<<Algorithms::shortestPath(weightedGraph, 0, 4)<<endl;
-}    
-/**
+    
+
      ariel::Graph g;
    
 
     // 3x3 matrix that represents a connected graph.
-    vector<vector<int>> graph = {
+    vector<vector<int>> gr = {
         {0, 1, 0},
         {1, 0, 1},
         {0, 1, 0}};
@@ -96,4 +96,3 @@ ariel::Graph weightedGraph;
         cout << e.what() << endl; // Should print: "Invalid graph: The graph is not a square matrix."
     }
 }
-*/

@@ -1,7 +1,7 @@
 //Id-9115
 //Email address- orgoren3146@gmail.com#
 
-define DOCTEST_CONFIG_IMPLEMENT
+#define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
 using namespace doctest;
 
