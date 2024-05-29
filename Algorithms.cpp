@@ -11,38 +11,97 @@
 using namespace std;
 using namespace ariel;
 
+// Dfs algorithm 
+void Algorithms::DFS(size_t v, const vector<vector<int>>& graph, vector<bool>& visited) {
+        visited[v] = true;
+
+        for (size_t u = 0; u < graph.size(); ++u) {
+            if (graph[v][u] && !visited[u]) {
+                DFS(u, graph, visited);
+            }
+        }
+    }
+
+/**
+ * Split the is connected check to 2 functions:
+ * If the graph is directed we will use the Bfs algorithm
+ * If the graph is undirected we will use the Dfs algorithm
+ */
+
+
+bool Algorithms::isConnected(Graph gr) {
+
+    bool ans;
+    if(gr.getIsDirected()){
+        return isConnectedDirected(gr);
+    }
+   
+    return isConnectedUndirected(gr);
+
+}
+
+
+
+//Checking if a directed graph is connected by using dfs algorithm
+bool Algorithms::isConnectedDirected(Graph gr) {
+        vector<vector<int>> graph = gr.getGraph();
+        size_t numOfVertices = (size_t)gr.getNumOfVertices();
+
+        // Making dfs for each vertex
+        for (size_t i = 0; i < numOfVertices; ++i) {
+            vector<bool> visited(numOfVertices, false);
+            DFS(i, graph, visited);
+
+            // Check if all vertices are visited, if not, graph is not connecte
+            for (bool vVisited : visited) {
+                if (!vVisited) {
+                    return false; 
+                }
+            }
+        }
+
+        return true;
+    }
+
+   
 /*
-Bfs algorithm for checking if the graph is connected.
-The output of it is a bool array that indicates which vertex we checked.
+Bfs algorithm for checking if an undirected graph is connected.
+The output of is a bool array that indicates which vertex we checked.
 If one of the cells in the array is false, the graph is not connected.
  */
-bool Algorithms::isConnected(Graph gr)
+bool Algorithms::isConnectedUndirected(Graph gr)
 {
     vector<vector<int>> graph = gr.getGraph();
     size_t numOfVertices = (size_t)gr.getNumOfVertices();
-    vector<bool> isPath(numOfVertices, false);
+    //Initalize bollean array to check if there is a path between the 0 vertex to each one of the other vretices
+    vector<bool> visited(numOfVertices, false);
     queue<int> q;
     q.push(0);
-    isPath[0] = true;
+    visited[0] = true;
 
     while (!q.empty())
     {
+        /*Each iteration we are checking for  a different vertex if his neighbors already visited,
+          if they didn't, setting isPath[neighbor] to true
+        */
         size_t vertex = (size_t)q.front();
         q.pop();
 
         for (size_t i = 0; i < numOfVertices; i++)
         {
-            if (graph[vertex][i] && !isPath[i])
+            if (graph[vertex][i] && !visited[i])
             {
                 q.push(i);
-                isPath[i] = true;
+                visited[i] = true;
             }
         }
     }
-
+    /*Checking if all the vertices visited.
+     If one of the vertices hasn't visited, the graph is not connected.
+     */
     for (size_t i = 0; i < numOfVertices; i++)
     {
-        if (!isPath[i])
+        if (!visited[i])
         {
             return false;
         }
@@ -53,23 +112,20 @@ bool Algorithms::isConnected(Graph gr)
 
 /**
  * Split the shortest path check to 2 functions:
- * If the graph is weighed use the Bellman Ford algorithm
- * If the graph is Unweighed
+ * If the graph is weighed we will use the Bellman Ford algorithm
+ * If the graph is Unweighed we will use bfs algorithm.
  */
 string Algorithms::shortestPath(Graph gr, size_t start, size_t end)
 {
     string s;
     if (gr.getIsWeighed())
     {
-        s=shortestPathWeighed(gr, start, end);
+        return shortestPathWeighed(gr, start, end);
         
     }
-    else
-    {
-        s=shortestPathUnweighed(gr, start, end);
     
-    }
-    return s;
+    return shortestPathUnweighed(gr, start, end);
+
 }
 
 // Bellman ford algorithm for finding the shortest path in weighed graph

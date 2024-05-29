@@ -20,101 +20,102 @@ using namespace std;
 TEST_CASE("Test isConnected method on unweighed undirected graph") {
     // Test isConnected method with a connected graph
     Graph connectedGraph1;
-    std::vector<std::vector<int>> graph = {
+    vector<std::vector<int>> graph = {
         {0, 1, 0},
         {1, 0, 1},
         {0, 1, 0}
     };
     connectedGraph1.loadGraph(graph);
     CHECK(Algorithms::isConnected(connectedGraph1));
-}
 
-TEST_CASE("Test isConnected method on unweighed undirected graph") {
+SUBCASE("Test isConnected method on unweighed undirected graph") {
     // Test isConnected method with a disconnected graph
     Graph disconnectedGraph1;
-    std::vector<std::vector<int>> graph1 = {
+    vector<std::vector<int>> graph1 = {
         {0, 1, 0},
         {1, 0, 0},
         {0, 0, 0}
     };
     disconnectedGraph1.loadGraph(graph1);
     CHECK_FALSE(Algorithms::isConnected(disconnectedGraph1));
+    }
 }
+
 
 TEST_CASE("Test isConnected method on unweighed directed graph") {
     // Test isConnected method with a connected graph
     Graph connectedGraph2;
-    std::vector<std::vector<int>> graph = {
+    vector<std::vector<int>> graph = {
         {0, 1, 0},
         {0, 0, 1},
         {1, 1, 0}
     };
     connectedGraph2.loadGraph(graph);
     CHECK(Algorithms::isConnected(connectedGraph2));
-}
-TEST_CASE("Test isConnected method on unweighed directed graph") {
+
+SUBCASE("Test isConnected method on unweighed directed graph") {
     // Test isConnected method with a disconnected graph
     Graph disconnectedGraph2;
-    std::vector<std::vector<int>> graph1 = {
+    vector<std::vector<int>> graph1 = {
         {0, 1, 0},
         {0, 0, 0},
         {1, 0, 0}
     };
     disconnectedGraph2.loadGraph(graph1);
     CHECK_FALSE(Algorithms::isConnected(disconnectedGraph2));
+    }
 }
 
 TEST_CASE("Test isConnected method on weighed undirected graph") {
     // Test isConnected method with a connected graph
     Graph connectedGraph3;
-    std::vector<std::vector<int>> graph = {
+    vector<std::vector<int>> graph = {
         {0, 2, 0},
         {2, 0, 4},
         {0, 4, 0}
     };
     connectedGraph3.loadGraph(graph);
     CHECK(Algorithms::isConnected(connectedGraph3));
-}
 
-TEST_CASE("Test isConnected method on weighed undirected graph") {
+SUBCASE("Test isConnected method on weighed undirected graph") {
     // Test isConnected method with a disconnected graph
     Graph disconnectedGraph3;
-    std::vector<std::vector<int>> graph1 = {
+    vector<std::vector<int>> graph1 = {
         {0, 2, 0},
         {2, 0, 0},
         {0, 0, 0}
     };
     disconnectedGraph3.loadGraph(graph1);
     CHECK_FALSE(Algorithms::isConnected(disconnectedGraph3));
+    }
 }
 
 TEST_CASE("Test isConnected method on weighed directed graph") {
     // Test isConnected method with a connected graph
     Graph connectedGraph4;
-    std::vector<std::vector<int>> graph = {
+    vector<std::vector<int>> graph = {
         {0, 2, 0},
         {0, 0, 3},
         {10, 5, 0}
     };
     connectedGraph4.loadGraph(graph);
     CHECK(Algorithms::isConnected(connectedGraph4));
-}
 
-TEST_CASE("Test isConnected method on weighed directed graph") {
+SUBCASE("Test isConnected method on weighed directed graph") {
     // Test isConnected method with a disconnected graph
     Graph disconnectedGraph4;
-    std::vector<std::vector<int>> graph1 = {
+    vector<std::vector<int>> graph1 = {
         {0, 10, 0},
         {0, 0, 0},
         {7, 0, 0}
     };
     disconnectedGraph4.loadGraph(graph1);
     CHECK_FALSE(Algorithms::isConnected(disconnectedGraph4));
+    }
 }
 
-
 TEST_CASE("Shortest Path Weighted Undirected Test") {
-    // Create a weighted graph
+    // Test shortest path from vertex 0 to vertex 4
     Graph weightedGraph1;
     vector<vector<int>> graph = {
         {0, 4, 0, 0, 0, 0, 0, 8, 0},
@@ -129,36 +130,76 @@ TEST_CASE("Shortest Path Weighted Undirected Test") {
     };
     weightedGraph1.loadGraph(graph);
 
-    // Test shortest path from vertex 0 to vertex 4
     string shortestPath = Algorithms::shortestPath(weightedGraph1, 0, 4);
     CHECK(shortestPath == "Shortest path from vertex 0 to vertex 4: 0->7->6->5->4");
-}
 
 
-TEST_CASE("Shortest Path Weighted directed Test") {
-    // Create a weighted graph
-    Graph weightedGraph2;
+SUBCASE("Shortest Path Weighted Undirected Test") {
+   // Test no shortest path from vertex 0 to vertex 2
+    Graph weightedGraph1;
     vector<vector<int>> graph = {
         {0, 4, 0, 0, 0, 0, 0, 8, 0},
-        {3, 0, 8, 0, 0, 0, 0, 11, 0},
-        {0, 6, 0, 7, 0, 4, 0, 0, 2},
-        {0, 0, 7, 0, 9, 14, 0, 0, 0},
+        {8, 0, 0, 0, 0, 0, 0, 11, 0},
+        {0, 8, 0, 7, 0, 4, 0, 0, 2},
+        {0, 0, 0, 0, 9, 14, 0, 0, 0},
         {0, 0, 0, 9, 0, 10, 0, 0, 0},
-        {0, 0, 4, 14, 10, 0, 2, 0, 0},
+        {0, 0, 0, 14, 10, 0, 2, 0, 0},
         {0, 0, 0, 0, 0, 2, 0, 1, 6},
         {8, 11, 0, 0, 0, 0, 1, 0, 7},
         {0, 0, 0, 0, 0, 0, 6, 7, 0}
     };
+    weightedGraph1.loadGraph(graph);
+
+    string shortestPath = Algorithms::shortestPath(weightedGraph1, 0, 2);
+    CHECK(shortestPath == "-1");
+
+}
+}
+TEST_CASE("Shortest Path Weighted directed Test") {
+    // Test shortest path from vertex 0 to vertex 4
+    Graph weightedGraph2;
+    vector<vector<int>> graph = {
+        {0, 4, 0, 0, 0, 0, 0, 8, 0},
+        {3, 0, 8, 0, 0, 0, 0, 11, 0},
+        {0, 0, 0, 7, 0, 4, 0, 0, 2},
+        {0, 0, 7, 0, 9, 14, 0, 0, 0},
+        {0, 0, 0, 9, 0, 10, 0, 0, 0},
+        {0, 0, 4, 14, 10, 0, 2, 0, 0},
+        {0, 0, 0, 0, 0, 2, 0, 1, 6},
+        {8, 0, 0, 0, 0, 0, 1, 0, 7},
+        {0, 0, 0, 0, 0, 0, 6, 7, 0}
+    };
     weightedGraph2.loadGraph(graph);
 
-    // Test shortest path from vertex 0 to vertex 4
     string shortestPath = Algorithms::shortestPath(weightedGraph2, 0, 4);
     CHECK(shortestPath == "Shortest path from vertex 0 to vertex 4: 0->7->6->5->4");
+
+SUBCASE("Shortest Path Weighted directed Test") {
+    // Test no shortest path from vertex 8 to vertex 1
+    Graph weightedGraph2;
+    vector<vector<int>> graph = {
+        {0, 0, 0, 0, 0, 0, 0, 8, 0},
+        {3, 0, 8, 0, 0, 0, 0, 11, 0},
+        {0, 0, 0, 7, 0, 4, 0, 0, 2},
+        {0, 0, 7, 0, 9, 14, 0, 0, 0},
+        {0, 0, 0, 9, 0, 10, 0, 0, 0},
+        {0, 0, 4, 14, 10, 0, 2, 0, 0},
+        {0, 0, 0, 0, 0, 2, 0, 1, 6},
+        {8, 0, 0, 0, 0, 0, 1, 0, 7},
+        {0, 0, 0, 0, 0, 0, 6, 0, 0}
+    };
+    weightedGraph2.loadGraph(graph);
+    
+    string shortestPath = Algorithms::shortestPath(weightedGraph2, 8, 1);
+    CHECK(shortestPath == "-1");
+
+    }
+
 }
 
 
 TEST_CASE("Shortest Path unweighted Undirected Test") {
-    // Create a weighted graph
+    // Test shortest path from vertex 0 to vertex 3
     Graph weightedGraph3;
     vector<vector<int>> graph = {
         {0, 1, 0, 0},
@@ -168,13 +209,27 @@ TEST_CASE("Shortest Path unweighted Undirected Test") {
     };
     weightedGraph3.loadGraph(graph);
 
-    // Test shortest path from vertex 0 to vertex 4
     string shortestPath = Algorithms::shortestPath(weightedGraph3, 0, 3);
     CHECK(shortestPath == "Shortest path from vertex 0 to vertex 3: 0->1->3");
+
+SUBCASE("Shortest Path unweighted Undirected Test") {
+   // Test no shortest path from vertex 0 to vertex 3
+    Graph weightedGraph3;
+    vector<vector<int>> graph = {
+        {0, 1, 0, 0},
+        {1, 0, 1, 0},
+        {0, 1, 0, 0},
+        {0, 1, 1, 0}
+    };
+    weightedGraph3.loadGraph(graph);
+
+    string shortestPath = Algorithms::shortestPath(weightedGraph3, 0, 3);
+    CHECK(shortestPath == "-1");
+    }
 }
 
 TEST_CASE("Shortest Path unweighted directed Test") {
-    // Create a weighted graph
+    // Test shortest path from vertex 0 to vertex 4
     Graph weightedGraph4;
     vector<vector<int>> graph = {
         {0, 1, 0, 0},
@@ -184,11 +239,24 @@ TEST_CASE("Shortest Path unweighted directed Test") {
     };
     weightedGraph4.loadGraph(graph);
 
-    // Test shortest path from vertex 0 to vertex 4
     string shortestPath = Algorithms::shortestPath(weightedGraph4, 0, 3);
     CHECK(shortestPath == "Shortest path from vertex 0 to vertex 3: 0->1->2->3");
-}
 
+SUBCASE("Shortest no Path unweighted directed Test") {
+    // Test shortest path from vertex 0 to vertex 4
+    Graph weightedGraph4;
+    vector<vector<int>> graph = {
+        {0, 1, 0, 0},
+        {1, 0, 1, 0},
+        {0, 1, 0, 0},
+        {0, 1, 1, 0}
+    };
+    weightedGraph4.loadGraph(graph);
+
+    string shortestPath = Algorithms::shortestPath(weightedGraph4, 0, 3);
+    CHECK(shortestPath == "-1");
+    }
+}
 
 TEST_CASE("Is Bipartite Test unweighed undirected graph") {
     // Create a bipartite graph
@@ -256,7 +324,7 @@ TEST_CASE("Is Bipartite Test weighed directed graph") {
 
 
 TEST_CASE("Test is contains cycle method on unweighed undirected graph") {
-    // Test isConnected method with a connected graph
+    
     Graph cycleGraph1;
     std::vector<std::vector<int>> graph = {
         {0, 1, 0},
@@ -269,7 +337,7 @@ TEST_CASE("Test is contains cycle method on unweighed undirected graph") {
 }
 
 TEST_CASE("Test is contains cycle method on unweighed directed graph") {
-    // Test isConnected method with a connected graph
+    
     Graph cycleGraph2;
     std::vector<std::vector<int>> graph = {
         {0, 1, 0},
@@ -279,10 +347,9 @@ TEST_CASE("Test is contains cycle method on unweighed directed graph") {
     cycleGraph2.loadGraph(graph);
     string cycleGraph=Algorithms::isContainsCycle(cycleGraph2); 
     CHECK(cycleGraph=="The cycle is: 0->1->2->0");
-}
 
-TEST_CASE("Test is contains cycle method on unweighed directed graph") {
-    // Test isConnected method with a connected graph
+SUBCASE("Test isn't contains cycle method on unweighed directed graph") {
+    
     Graph noncycleGraph1;
     std::vector<std::vector<int>> graph = {
         {0, 1, 0},
@@ -292,10 +359,10 @@ TEST_CASE("Test is contains cycle method on unweighed directed graph") {
     noncycleGraph1.loadGraph(graph);
     string cycleGraph=Algorithms::isContainsCycle(noncycleGraph1); 
     CHECK(cycleGraph== "0");
+    }
 }
-
 TEST_CASE("Test is contains cycle method on weighed undirected graph") {
-    // Test isConnected method with a connected graph
+  
     Graph cycleGraph3;
     std::vector<std::vector<int>> graph = {
         {0, 12, 0},

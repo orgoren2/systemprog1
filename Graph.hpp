@@ -12,7 +12,7 @@ namespace ariel
     {
 
     private:
-        std::vector<vector<int>> graph;
+        vector<vector<int>> graph;
         bool isDirected;
         bool isWeighed ;
         int numOfVertices;
