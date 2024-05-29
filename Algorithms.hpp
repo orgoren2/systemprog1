@@ -20,7 +20,7 @@ namespace ariel
         Graph gr;
     
     static bool checkIsContainsCycle(size_t v, vector<bool> &visited, vector<size_t> &parent, stack<int> &cycle, vector<vector<int>> &graph);
-    static void SDFS(size_t v, const vector<vector<int>>& graph, vector<bool>& visited);
+    static void DFS(size_t v, const vector<vector<int>>& graph, vector<bool>& visited);
 
     public:
        

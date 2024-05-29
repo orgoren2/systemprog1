@@ -13,7 +13,7 @@ using namespace std;
 int main()
 {
 
-ariel::Graph weightedGraph;
+    ariel::Graph weightedGraph;
     vector<vector<int>> graph = {
         {0, 4, 0, 0, 0, 0, 0, 8, 0},
         {4, 0, 8, 0, 0, 0, 0, 11, 0},
@@ -29,18 +29,16 @@ ariel::Graph weightedGraph;
     cout<<weightedGraph.getIsDirected()<<endl;
 
     // Test shortest path from vertex 0 to vertex 4
-    cout<<Algorithms::shortestPath(weightedGraph, 0, 4)<<endl;
+    cout<<Algorithms::shortestPath(weightedGraph, 0, 4)<<endl; //sho
     
-
-     ariel::Graph g;
+    ariel::Graph g;
    
-
     // 3x3 matrix that represents a connected graph.
     vector<vector<int>> gr = {
         {0, 1, 0},
         {1, 0, 1},
         {0, 1, 0}};
-    g.loadGraph(graph); // Load the graph to the object.
+    g.loadGraph(gr); // Load the graph to the object.
 
     
     g.printGraph();                                    // Should print: "Graph with 3 vertices and 2 edges"
@@ -78,7 +76,7 @@ ariel::Graph weightedGraph;
     cout << Algorithms::isConnected(g) << endl;        // Should print: "1" (true).
     cout << Algorithms::shortestPath(g, 0, 4) << endl; // Should print: Shortest path from vertex 0 to vertex 4: 0->2->3->4.
     cout << Algorithms::isContainsCycle(g) << endl;    // Should print: "The cycle is: 0->1->0".
-    cout << Algorithms::isBipartite(g) << endl;        // Should print: "The graph is bipartite: A={0, 2, 4}, B={1, 3}."
+    cout << Algorithms::isBipartite(g) << endl;        // Should print: "0"
 
     // 5x4 matrix that reprsents invalid graph.
     vector<vector<int>> graph4 = {
