@@ -30,23 +30,23 @@ namespace ariel
 
         void loadGraph(vector<vector<int>> gr);
         int countNumOfEdges(vector<vector<int>> gr);
-        void printGraph();
+        void printGraph() const;
         
 
         // inline methods
-        bool getIsDirected()
+        bool getIsDirected() const
         { 
             return this->isDirected;
         }
-        bool getIsWeighed()
+        bool getIsWeighed() const
         { 
             return this->isWeighed;
         }
-        int getNumOfVertices()
+        int getNumOfVertices() const
         { 
             return this->numOfVertices;
         }
-        vector<vector<int>> getGraph()
+        vector<vector<int>> getGraph() const
         { 
             return this->graph;
         }

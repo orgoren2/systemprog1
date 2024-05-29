@@ -60,7 +60,7 @@ int Graph::countNumOfEdges(vector<vector<int>> gr)
     return countEdges / 2;
 }
 
-void Graph::printGraph()
+void Graph::printGraph() const
 {
      
     cout << "Graph with " << this->numOfVertices << " vertices and " << this->numOfEdges << " edges" << endl;

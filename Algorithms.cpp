@@ -29,7 +29,7 @@ void Algorithms::DFS(size_t v, const vector<vector<int>>& graph, vector<bool>& v
  */
 
 
-bool Algorithms::isConnected(Graph gr) {
+bool Algorithms::isConnected(const Graph& gr) {
 
     bool ans;
     if(gr.getIsDirected()){
@@ -43,7 +43,7 @@ bool Algorithms::isConnected(Graph gr) {
 
 
 //Checking if a directed graph is connected by using dfs algorithm
-bool Algorithms::isConnectedDirected(Graph gr) {
+bool Algorithms::isConnectedDirected(const Graph& gr) {
         vector<vector<int>> graph = gr.getGraph();
         size_t numOfVertices = (size_t)gr.getNumOfVertices();
 
@@ -69,7 +69,7 @@ Bfs algorithm for checking if an undirected graph is connected.
 The output of is a bool array that indicates which vertex we checked.
 If one of the cells in the array is false, the graph is not connected.
  */
-bool Algorithms::isConnectedUndirected(Graph gr)
+bool Algorithms::isConnectedUndirected(const Graph& gr) 
 {
     vector<vector<int>> graph = gr.getGraph();
     size_t numOfVertices = (size_t)gr.getNumOfVertices();
@@ -115,7 +115,7 @@ bool Algorithms::isConnectedUndirected(Graph gr)
  * If the graph is weighed we will use the Bellman Ford algorithm
  * If the graph is Unweighed we will use bfs algorithm.
  */
-string Algorithms::shortestPath(Graph gr, size_t start, size_t end)
+string Algorithms::shortestPath(const Graph& gr, size_t start, size_t end)
 {
     string s;
     if (gr.getIsWeighed())
@@ -129,7 +129,7 @@ string Algorithms::shortestPath(Graph gr, size_t start, size_t end)
 }
 
 // Bellman ford algorithm for finding the shortest path in weighed graph
-string Algorithms::shortestPathWeighed(Graph gr, size_t start, size_t end)
+string Algorithms::shortestPathWeighed(const Graph& gr, size_t start, size_t end)
 {
     vector<vector<int>> graph = gr.getGraph();
     size_t numOfVertices = (size_t)gr.getNumOfVertices();
@@ -178,7 +178,7 @@ string Algorithms::shortestPathWeighed(Graph gr, size_t start, size_t end)
 }
 
 // Bfs algorithm for finding the shortest path in unweighed graph
-string Algorithms::shortestPathUnweighed(Graph gr, size_t start, size_t end)
+string Algorithms::shortestPathUnweighed(const Graph& gr, size_t start, size_t end)
 {
     vector<vector<int>> graph = gr.getGraph();
     size_t numOfVertices = (size_t)graph.size();
@@ -268,7 +268,7 @@ string Algorithms::shortestPathUnweighed(Graph gr, size_t start, size_t end)
         return false;
     }
 
-    string Algorithms::isContainsCycle(Graph gr)
+    string Algorithms::isContainsCycle(const Graph& gr)
     {
        
         vector<vector<int>> graph = gr.getGraph();
@@ -301,7 +301,7 @@ string Algorithms::shortestPathUnweighed(Graph gr, size_t start, size_t end)
        It checks for each vertex if his adjacent vertex has the same color as him,
        if it does, the graph is bipartite
     */
-    string Algorithms::isBipartite(Graph gr)
+    string Algorithms::isBipartite(const Graph& gr)
     {
         vector<vector<int>> graph = gr.getGraph();
         size_t numOfVertices = (size_t)gr.getNumOfVertices();
@@ -357,7 +357,7 @@ string Algorithms::shortestPathUnweighed(Graph gr, size_t start, size_t end)
        for one of the edges changed, there is a negative cycle in the graph.
     */
 
-    string Algorithms::negativeCycle(Graph gr)
+    string Algorithms::negativeCycle(const Graph& gr)
     {
         if( !gr.getIsWeighed()){
             return "Graph doesn't contains negative weight cycle"; 
