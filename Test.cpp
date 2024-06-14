@@ -17,6 +17,62 @@ using namespace doctest;
 using namespace ariel;
 using namespace std;
 
+
+TEST_CASE("Test countNumOfEdges method on  undirected graph") {
+    // Test isConnected method with a connected graph
+    Graph Graph1;
+    vector<std::vector<int>> graph = {
+        {0, 1, 0},
+        {1, 0, 1},
+        {0, 1, 0}
+    };
+    Graph1.loadGraph(graph);
+    CHECK(Graph1.getNumOfEdges()==2);
+
+SUBCASE("Test countNumOfEdges method on  directed graph") {
+    // Test isConnected method with a disconnected graph
+    Graph Graph2;
+    vector<std::vector<int>> graph1 = {
+        {0, 1, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    };
+    Graph2.loadGraph(graph1);
+    CHECK(Graph2.getNumOfEdges()==1);
+    }
+}
+
+
+TEST_CASE("Test loadGraph method on graph with self edges") {
+    // Test isConnected method with a connected graph
+    Graph Graph1;
+    vector<std::vector<int>> graph = {
+        {1, 1, 0},
+        {0, 1, 1},
+        {0,0 ,1}
+    };
+    CHECK_THROWS(Graph1.loadGraph(graph));
+
+SUBCASE("Test loadGraph method on empty graph") {
+    // Test isConnected method with a disconnected graph
+    Graph Graph2;
+    vector<std::vector<int>> graph1 = {};
+   CHECK_THROWS(Graph2.loadGraph(graph1));
+    }
+
+SUBCASE("Test loadGraph method when raws!=cols in the graph") {
+    // Test isConnected method with a disconnected graph
+    Graph Graph3;
+    vector<std::vector<int>> graph2 = {
+        {0, 1, 0,0},
+        {0, 0, 1,0},
+        {0,0 ,0,1}
+    };
+   CHECK_THROWS(Graph3.loadGraph(graph2));
+    }
+}
+
+
 TEST_CASE("Test isConnected method on unweighed undirected graph") {
     // Test isConnected method with a connected graph
     Graph connectedGraph1;
@@ -113,6 +169,7 @@ SUBCASE("Test isConnected method on weighed directed graph") {
     CHECK_FALSE(Algorithms::isConnected(disconnectedGraph4));
     }
 }
+
 
 TEST_CASE("Shortest Path Weighted Undirected Test") {
     // Test shortest path from vertex 0 to vertex 4

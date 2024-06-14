@@ -11,24 +11,25 @@
 using namespace std;
 using namespace ariel;
 
-// Dfs algorithm 
+// Dfs algorithm for traversing the graph starting from vertex v
 void Algorithms::DFS(size_t v, const vector<vector<int>>& graph, vector<bool>& visited) {
-        visited[v] = true;
+    // Mark the current vertex as visited
+    visited[v] = true;
 
-        for (size_t u = 0; u < graph.size(); ++u) {
-            if (graph[v][u] && !visited[u]) {
-                DFS(u, graph, visited);
-            }
+    // Traverse all adjacent vertices of v
+    for (size_t u = 0; u < graph.size(); ++u) {
+        // If u is adjacent to v and not visited yet, recursively call DFS for vertex u
+        if (graph[v][u] && !visited[u]) {
+            DFS(u, graph, visited);
         }
     }
+}
 
 /**
- * Split the is connected check to 2 functions:
- * If the graph is directed we will use the Bfs algorithm
- * If the graph is undirected we will use the Dfs algorithm
+ * Split the is connected check:
+ * If the graph is directed, we will use the Bfs algorithm
+ * If the graph is undirected, we will use the Dfs algorithm
  */
-
-
 bool Algorithms::isConnected(const Graph& gr) {
 
     bool ans;
@@ -73,7 +74,7 @@ bool Algorithms::isConnectedUndirected(const Graph& gr)
 {
     vector<vector<int>> graph = gr.getGraph();
     size_t numOfVertices = (size_t)gr.getNumOfVertices();
-    //Initalize bollean array to check if there is a path between the 0 vertex to each one of the other vretices
+    //Initialize boolean array to check if there is a path between the 0 vertex to each one of the other vretices
     vector<bool> visited(numOfVertices, false);
     queue<int> q;
     q.push(0);
@@ -89,6 +90,7 @@ bool Algorithms::isConnectedUndirected(const Graph& gr)
 
         for (size_t i = 0; i < numOfVertices; i++)
         {
+            //Insert all the neighbors that has an edge with the vertex to the queue
             if (graph[vertex][i] && !visited[i])
             {
                 q.push(i);
@@ -111,7 +113,7 @@ bool Algorithms::isConnectedUndirected(const Graph& gr)
 }
 
 /**
- * Split the shortest path check to 2 functions:
+ * Split the shortest path check:
  * If the graph is weighed we will use the Bellman Ford algorithm
  * If the graph is Unweighed we will use bfs algorithm.
  */
@@ -128,54 +130,68 @@ string Algorithms::shortestPath(const Graph& gr, size_t start, size_t end)
 
 }
 
-// Bellman ford algorithm for finding the shortest path in weighed graph
+// Bellman-Ford algorithm for finding the shortest path in a weighted graph
 string Algorithms::shortestPathWeighed(const Graph& gr, size_t start, size_t end)
 {
+   
     vector<vector<int>> graph = gr.getGraph();
     size_t numOfVertices = (size_t)gr.getNumOfVertices();
     vector<int> distance(numOfVertices, INFINITE);
-    vector<size_t> parent(numOfVertices, (size_t)-1); 
+    vector<size_t> parent(numOfVertices, (size_t)-1);
+    // Setting the distance to the start vertex is 0
     distance[start] = 0;
 
+    // Making relax (numOfVertices - 1) times
     for (size_t i = 0; i < numOfVertices - 1; i++)
     {
         for (size_t u = 0; u < numOfVertices; u++)
         {
             for (size_t v = 0; v < numOfVertices; v++)
             {
+                // If there is an edge from u to v and the distance to u is not INFINITE
+                // and the distance through u to v is less than the current distance to v
                 if (graph[u][v] && distance[u] != INFINITE && distance[u] + graph[u][v] < distance[v])
                 {
+                    // Update the distance to v
                     distance[v] = distance[u] + graph[u][v];
-                    parent[v] = u; 
+                    // Set u as the parent of v
+                    parent[v] = u;
                 }
             }
         }
     }
 
-    string path= "Shortest path from vertex "+ to_string(start)+ " to vertex " +to_string(end) +": ";
-    size_t currentVertex = end ;
-     stack<size_t> sPath;
+    // Build the path string
+    string path = "Shortest path from vertex " + to_string(start) + " to vertex " + to_string(end) + ": ";
+    size_t currentVertex = end;
+    stack<size_t> sPath;
+
+    // Trace the path from end to start using the parent vector
     while (currentVertex != -1)
     {
         sPath.push(currentVertex);
         currentVertex = parent[currentVertex];
     }
-   
-    while(!sPath.empty()){
-         path = path + to_string(sPath.top() ); 
-         sPath.pop();
-          if (!sPath.empty())
-                    {
-                        path = path + "->";
-                    }
+
+    while(!sPath.empty())
+    {
+        path = path + to_string(sPath.top());
+        sPath.pop();
+        if (!sPath.empty())
+        {
+            path = path + "->";
+        }
     }
+
+    // If the distance to the end vertex is still INFINITE, return -1 (no path exists)
     if (distance[end] == INFINITE)
     {
-        return "-1"; 
+        return "-1";
     }
 
     return path;
 }
+
 
 // Bfs algorithm for finding the shortest path in unweighed graph
 string Algorithms::shortestPathUnweighed(const Graph& gr, size_t start, size_t end)

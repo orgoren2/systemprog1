@@ -5,9 +5,16 @@
 using namespace std;
 using namespace ariel;
 
+/** The function gets vector and loads it to the graph.
+ * It also initalizes the class fields
+ */
 
-void Graph::loadGraph(vector<vector<int>> gr)
+void Graph::loadGraph(vector<vector<int>> &gr)
 {
+    if(gr.empty() || gr.size()==0 || gr.size()!=gr[0].size()){
+         throw invalid_argument("Invalid matrix");
+    }
+
     this->graph = gr; 
     this->numOfVertices = gr.size(); 
 
@@ -17,6 +24,9 @@ void Graph::loadGraph(vector<vector<int>> gr)
     {
         for (size_t z = 0; z < gr.size(); z++)
         {
+            if(i==z && gr[i][z]!=0){
+                throw invalid_argument("Invalid matrix");
+            }
             if (gr[i][z] != gr[z][i])
             {
                 isD++;
@@ -39,7 +49,8 @@ void Graph::loadGraph(vector<vector<int>> gr)
     this->numOfEdges = countNumOfEdges(gr);
 }
 
-int Graph::countNumOfEdges(vector<vector<int>> gr)
+// Side function for the print method
+int Graph::countNumOfEdges(vector<vector<int>> &gr)
 {
 
     int countEdges = 0;
@@ -60,6 +71,7 @@ int Graph::countNumOfEdges(vector<vector<int>> gr)
     return countEdges / 2;
 }
 
+// The function prints the graph's number of vertices and edges
 void Graph::printGraph() const
 {
      

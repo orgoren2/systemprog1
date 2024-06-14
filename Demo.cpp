@@ -26,10 +26,10 @@ int main()
         {0, 0, 2, 0, 0, 0, 6, 7, 0}
     };
     weightedGraph.loadGraph(graph);
-    cout<<weightedGraph.getIsDirected()<<endl;
+    cout<<weightedGraph.getIsDirected()<<endl; // should print "0" 
 
     // Test shortest path from vertex 0 to vertex 4
-    cout<<Algorithms::shortestPath(weightedGraph, 0, 4)<<endl; //sho
+    cout<<Algorithms::shortestPath(weightedGraph, 0, 4)<<endl; //should print : "Shortest path from vertex 0 to vertex 4: 0->7->6->5->4"
     
     ariel::Graph g;
    

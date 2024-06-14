@@ -17,22 +17,21 @@ namespace ariel
         bool isWeighed ;
         int numOfVertices;
         int numOfEdges;
-
+        
+        int countNumOfEdges(vector<vector<int>> &gr);
+    
     public:
     
         Graph() {
             this->isDirected=false;
             bool isWeighed =false;
             this->numOfEdges=0;
-            this->numOfVertices=0;
-          
+            this->numOfVertices=0; 
         }
 
-        void loadGraph(vector<vector<int>> gr);
-        int countNumOfEdges(vector<vector<int>> gr);
+        void loadGraph(vector<vector<int>> &gr);
         void printGraph() const;
         
-
         // inline methods
         bool getIsDirected() const
         { 
@@ -45,6 +44,11 @@ namespace ariel
         int getNumOfVertices() const
         { 
             return this->numOfVertices;
+        }
+        //For testing countNumOfEdges
+        int getNumOfEdges() const
+        { 
+            return this->numOfEdges;
         }
         vector<vector<int>> getGraph() const
         { 
