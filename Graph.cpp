@@ -21,7 +21,7 @@ void Graph::loadGraph(vector<vector<int>> &gr)
 {
     if (gr.empty() || gr.size() == 0 || gr.size() != gr[0].size())
     {
-        throw invalid_argument("Invalid matrix");
+        throw invalid_argument("Invalid graph");
     }
 
     this->graph = gr;
@@ -35,7 +35,7 @@ void Graph::loadGraph(vector<vector<int>> &gr)
         {
             if (i == z && gr[i][z] != 0)
             {
-                throw invalid_argument("Invalid matrix");
+                throw invalid_argument("Invalid graph");
             }
             //Checking if the graph is directed
             if (gr[i][z] != gr[z][i])
