@@ -396,62 +396,48 @@ string Algorithms::isBipartite(const Graph &gr)
    Doing relax n times to all the edges, if at the n'th time the distance
    for one of the edges changed, there is a negative cycle in the graph.
 */
-
-string Algorithms::negativeCycle(const Graph &gr)
-{
-    // Check if the graph is weighted, if it doesn't, the graph doesn't conatins negative cycle
-    if (!gr.getIsWeighed())
+string Algorithms::negativeCycle(const Graph& gr)
     {
-        return "Graph doesn't contain a negative weight cycle";
-    }
+        if( !gr.getIsWeighed()){
+            return "Graph doesn't contains negative weight cycle"; 
+        }
+        vector<vector<int>> graph = gr.getGraph();
+        size_t numOfVertices = (size_t)gr.getNumOfVertices();
+        vector<int> distance(numOfVertices, INFINITE);
+        vector<int> parent(numOfVertices, -1);
+        distance[0] = 0;
 
-    // Get the adjacency matrix of the graph
-    vector<vector<int>> graph = gr.getGraph();
-    size_t numOfVertices = (size_t)gr.getNumOfVertices();
+        // Relax edges n - 1 times
+        for (size_t i = 0; i < numOfVertices - 1; i++)
+        {
+            for (size_t u = 0; u < numOfVertices; u++)
+            {
+                for (size_t v = 0; v < numOfVertices; v++)
+                {
+                    // If there is an edge from u to v, and the distance to u is not infinite,
+                    // and the path through u to v is shorter than the current distance to v
+                    if (graph[u][v] != 0 && distance[u] != INFINITE && distance[u] + graph[u][v] < distance[v])
+                    {
+                        // Update the distance to v
+                        distance[v] = distance[u] + graph[u][v];
+                         // Update the parent of v
+                        parent[v] = u;
+                    }
+                }
+            }
+        }
 
-    // Initialize distance vector with INFINITE for all vertices
-    vector<int> distance(numOfVertices, INFINITE);
-    // Initialize parent vector with -1 for all vertices (no parent initially)
-    vector<int> parent(numOfVertices, -1);
-
-    // Distance to the source vertex (vertex 0) is 0
-    distance[0] = 0;
-
-    // Relax edges |V| - 1 times (Bellman-Ford Algorithm)
-    for (size_t i = 0; i < numOfVertices - 1; i++)
-    {
+        // Making relax one more time, if the distance to one of the edges changed, the graph is not bipartite
         for (size_t u = 0; u < numOfVertices; u++)
         {
             for (size_t v = 0; v < numOfVertices; v++)
             {
-                // If there is an edge from u to v, and the distance to u is not infinite,
-                // and the path through u to v is shorter than the current distance to v
                 if (graph[u][v] != 0 && distance[u] != INFINITE && distance[u] + graph[u][v] < distance[v])
                 {
-                    // Update the distance to v
-                    distance[v] = distance[u] + graph[u][v];
-                    // Update the parent of v
-                    parent[v] = u;
+
+                    return "Graph contains negative weight cycle";
                 }
             }
         }
+        return "Graph doesn't contains negative weight cycle";
     }
-
-    // Check for negative weight cycles
-    for (size_t u = 0; u < numOfVertices; u++)
-    {
-        for (size_t v = 0; v < numOfVertices; v++)
-        {
-            // If there is an edge from u to v, and the distance to u is not infinite,
-            // and the path through u to v is shorter than the current distance to v
-            if (graph[u][v] != 0 && distance[u] != INFINITE && distance[u] + graph[u][v] < distance[v])
-            {
-                // Negative weight cycle detected
-                return "Graph contains a negative weight cycle";
-            }
-        }
-    }
-
-    // No negative weight cycle found
-    return "Graph doesn't contain a negative weight cycle";
-}
